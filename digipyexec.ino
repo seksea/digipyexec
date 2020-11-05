@@ -31,7 +31,7 @@ SOFTWARE.
 
 #include "DigiKeyboard.h"
 
-#define PY_TEST_SCRIPT "import time;time.sleep(2);f=open('test.txt', 'x');f.close()"
+#define PY_SCRIPT "import time;time.sleep(2);f=open('test.txt', 'x');f.close()"
 
 /* DIFFERENT DELAYS */
 #define START_DELAY 500
@@ -65,7 +65,7 @@ void setup() {
   // to reduce confusion when creating scripts as you may not have perms to write in python folder)
   DigiKeyboard.print("f=open('pythonscr.py', 'w');");
   DigiKeyboard.print("f.write('''from pathlib import Path;import os;os.chdir(Path.home());");
-  DigiKeyboard.print(PY_TEST_SCRIPT);
+  DigiKeyboard.print(PY_SCRIPT);
   DigiKeyboard.print("''');");
   DigiKeyboard.print("f.close();");
 
