@@ -1,7 +1,7 @@
 # digipyexec
 <p align="center">
     <a href="http://digistump.com/products/1"><img src="https://img.shields.io/badge/Arduino-DigiSpark-blue.svg" alt="dspark badge"></a>
-    <img src="https://img.shields.io/badge/Finished-green.svg" alt="finished badge">
+    <img src="https://img.shields.io/badge/Finished-Actively Maintained-green.svg" alt="finished badge">
     <a href="LICENSE"><img src="https://img.shields.io/badge/License-MIT-blue.svg" alt="mit license"></a>
 </p>
 
