@@ -28,9 +28,9 @@ SOFTWARE.
 
 ============================================================================*/
 
-
 #include "DigiKeyboard.h"
 
+/* ACTUAL SCRIPT TO EXEC */
 #define PY_SCRIPT "import time;time.sleep(2);f=open('test.txt', 'x');f.close()"
 
 /* DIFFERENT DELAYS */
@@ -50,6 +50,7 @@ void setup() {
   DigiKeyboard.sendKeyStroke(KEY_ENTER);
   DigiKeyboard.delay(PYTHON_WINDOW_OPEN_DELAY);
 
+  
   /*   Python script   */
   // All is in one line but split into multiple prints for readability
 
@@ -70,7 +71,7 @@ void setup() {
   DigiKeyboard.print("f.close();");
 
   // Open the script we just made with pythonw (so it runs in background
-  DigiKeyboard.print("subprocess.Popen('pythonw.exe pythonscr.py', creationflags=8, close_fds=True);"); // Open 
+  DigiKeyboard.print("subprocess.Popen('pythonw.exe pythonscr.py', creationflags=8, close_fds=True);");
   
   // Close python prompt when done
   DigiKeyboard.print("exit();");
