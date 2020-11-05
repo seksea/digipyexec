@@ -31,7 +31,7 @@ SOFTWARE.
 #include "DigiKeyboard.h"
 
 /* ACTUAL SCRIPT TO EXEC */
-#define PY_SCRIPT "import time;time.sleep(2);f=open('test.txt', 'x');f.close()"
+#define PY_SCRIPT "import time;time.sleep(2);f=open('test.txt','x');f.close()"
 
 /* DIFFERENT DELAYS */
 #define START_DELAY 500
@@ -51,7 +51,7 @@ void setup() {
   DigiKeyboard.delay(PYTHON_WINDOW_OPEN_DELAY);
 
   /*   Python script   */
-  DigiKeyboard.print("import subprocess as s;import os,pathlib;os.chdir(pathlib.Path.home());f=open('pythonscr.py','w');f.write('''import os,pathlib;os.chdir(pathlib.Path.home());");
+  DigiKeyboard.print("import os,pathlib as p,subprocess as s;os.chdir(p.Path.home());f=open('pythonscr.py','w');f.write('''import os,pathlib as p;os.chdir(p.Path.home());");
   DigiKeyboard.print(PY_SCRIPT);
   DigiKeyboard.print("''');f.close();s.Popen('pythonw.exe pythonscr.py',creationflags=8,close_fds=1);exit();");
   DigiKeyboard.sendKeyStroke(KEY_ENTER);
