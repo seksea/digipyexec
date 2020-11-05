@@ -8,7 +8,7 @@
 ### :warning: I am not responsible for anything malicious done with this as it is for educational purposes only. :warning:
 
 Make a digispark run a python script in the background on any "victim" windows computer you plug it into
-
+> If you want the digispark to type it faster then use digipyexec-min.ino which is a version that's faster, but less readable
 #
 ### :page_facing_up: Usage
 1. Setup digispark with arduino IDE https://digistump.com/wiki/digispark/tutorials/connecting
