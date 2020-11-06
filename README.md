@@ -20,8 +20,7 @@ Make a digispark run a python script in the background on any "victim" windows c
 #
 ### :page_facing_up: Usage
 1. Setup digispark with arduino IDE https://digistump.com/wiki/digispark/tutorials/connecting and make sure "victim" has python3+ installed.
-2. Put you python script in the PY_SCRIPT macro, or use one of the examples in /scripts/*.
-2.1 If it's a teensy define TEENSY (line 31)
+2. Put a link to you python script in the PY_SCRIPT_URL macro (line 28). If it's a teensy define TEENSY (line 31)
 3. Upload to Digispark/teensy.
 4. Profit?!?!
 
