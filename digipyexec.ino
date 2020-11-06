@@ -54,16 +54,15 @@ void setup() {
 
   // py imports
   DigiKeyboard.print("import subprocess;");
-  DigiKeyboard.print("from pathlib import Path;");
   DigiKeyboard.print("import os;");
   
   // Change directory to home as we may not have permission to edit in the python folder
-  DigiKeyboard.print("os.chdir(Path.home());");
+  DigiKeyboard.print("os.chdir(os.path.expanduser('~'));");
   
   // Create the file named pythonscr.py which will run in the background in future (change dir to home
   // to reduce confusion when creating scripts as you may not have perms to write in python folder)
   DigiKeyboard.print("f=open('pythonscr.py', 'w');");
-  DigiKeyboard.print("f.write('''from pathlib import Path;import os;os.chdir(Path.home());");
+  DigiKeyboard.print("f.write('''import os;os.chdir(os.path.expanduser('~'));");
   DigiKeyboard.print(PY_SCRIPT);
   DigiKeyboard.print("''');");
   DigiKeyboard.print("f.close();");
