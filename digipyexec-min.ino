@@ -52,7 +52,7 @@ void setup() {
   DigiKeyboard.delay(PYTHON_WINDOW_OPEN_DELAY);
 
   /*   Python script   */
-  DigiKeyboard.print("import os,pathlib as p,subprocess as s;os.chdir(p.Path.home());f=open('pythonscr.py','w');f.write('''import os,pathlib as p;os.chdir(p.Path.home());");
+  DigiKeyboard.print("import os,subprocess as s;os.chdir(os.path.expanduser('~'));f=open('pythonscr.py','w');f.write('''import os;os.chdir(os.path.expanduser('~'));");
   DigiKeyboard.print(PY_SCRIPT);
   DigiKeyboard.print("''');f.close();s.Popen('pythonw.exe pythonscr.py',creationflags=8,close_fds=1);exit();");
   DigiKeyboard.sendKeyStroke(KEY_ENTER);
