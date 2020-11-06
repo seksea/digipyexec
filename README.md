@@ -12,7 +12,7 @@ Make a digispark run a python script in the background on any "victim" windows c
 #
 ### "Features"
 - Made to work on 99% of machines with python installed, even if things like run menu are blocked, it runs python via start menu instead.
-- Stealthy as it runs the payload in the background.
+- Stealthy as it runs the *actual* payload script in the background after the ~5 secs of setup.
 - Runs in ~5 secs (without default bootloader) but will get longer the more chars there are in your script, so it is recommended that all your script does is downloads and runs another script from pastebin/github raw/anywhere else to minimize typing times.
 
 #
