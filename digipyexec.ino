@@ -29,7 +29,8 @@ SOFTWARE.
 /* ACTUAL SCRIPT TO EXEC */
 // Default script waits 20 secs then makes a file named test.txt in home dir
 // Swap this line with your own script or one from scripts/*
-#define PY_SCRIPT "import time;time.sleep(20);f=open('test.txt', 'x');f.close()"
+#define PY_SCRIPT \
+  DigiKeyboard.print("import time;time.sleep(20);f=open('test.txt', 'x');f.close()");
 
 // use US_KEYBOARD if the computer is setup with a US keyboard layout
 #define UK_KEYBOARD
@@ -73,7 +74,7 @@ void setup() {
   #elif US_KEYBOARD
   DigiKeyboard.print("f.write('''import os;os.chdir(os.path.expanduser('~'));");
   #endif
-  DigiKeyboard.print(PY_SCRIPT);
+  PY_SCRIPT
   DigiKeyboard.print("''');");
   DigiKeyboard.print("f.close();");
 
