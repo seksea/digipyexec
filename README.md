@@ -19,7 +19,8 @@ Make a digispark run a python script in the background on any "victim" windows c
 ### :page_facing_up: Usage
 1. Setup digispark with arduino IDE https://digistump.com/wiki/digispark/tutorials/connecting and make sure "victim" has python3+ installed.
 2. Put you python script in the PY_SCRIPT macro.
-3. Profit?!?!
+3. Upload to Digispark.
+4. Profit?!?!
 
 #
 ### How to speed it up
