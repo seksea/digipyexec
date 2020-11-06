@@ -28,6 +28,7 @@ SOFTWARE.
 
 /* ACTUAL SCRIPT TO EXEC */
 // Default script waits 20 secs then makes a file named test.txt in home dir
+// Swap this line with your own script or one from scripts/*
 #define PY_SCRIPT "import time;time.sleep(20);f=open('test.txt', 'x');f.close()"
 
 /* DIFFERENT DELAYS */
