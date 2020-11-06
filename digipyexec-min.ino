@@ -31,6 +31,7 @@ SOFTWARE.
 #include "DigiKeyboard.h"
 
 /* ACTUAL SCRIPT TO EXEC */
+// Swap this line with your own script or one from scripts/*
 #define PY_SCRIPT "import time;time.sleep(2);f=open('test.txt','x');f.close()"
 
 /* DIFFERENT DELAYS */
