@@ -37,7 +37,9 @@ SOFTWARE.
 
 #ifndef TEENSY
   #include "DigiKeyboard.h"
+  #define KEY_LEFT_GUI MOD_GUI_LEFT
 #endif
+
 
 namespace kbd {
   void print(char* str) {
@@ -56,7 +58,7 @@ namespace kbd {
       DigiKeyboard.delay(t);
     #endif
   }
-  void pressKey(int key) {
+  void pressModKey(int key) {
     #ifdef TEENSY
       Keyboard.press(key);
       Keyboard.release(key);
@@ -64,13 +66,12 @@ namespace kbd {
       DigiKeyboard.sendKeyStroke(0, key);
     #endif
   }
-  void enter() {
-    //windows key on both teensy and dspark
+  void pressKey(int key) {
     #ifdef TEENSY
-      Keyboard.press(KEY_ENTER);
-      Keyboard.release(KEY_ENTER);
+      Keyboard.press(key);
+      Keyboard.release(key);
     #else
-      DigiKeyboard.sendKeyStroke(0, KEY_ENTER);
+      DigiKeyboard.sendKeyStroke(key);
     #endif
   }
 }
@@ -80,7 +81,7 @@ namespace kbd {
 void setup() {
   /*   Open python prompt   */
   kbd::wait(START_DELAY);
-  kbd::pressKey(KEY_LEFT_GUI);
+  kbd::pressModKey(KEY_LEFT_GUI);
   kbd::wait(START_MENU_DELAY);
   kbd::print("python.exe");
   kbd::wait(START_MENU_SEARCH_DELAY);
