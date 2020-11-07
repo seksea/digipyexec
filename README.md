@@ -8,7 +8,7 @@
 
 ### :warning: I am not responsible for anything malicious done with this as it is for educational purposes only. :warning:
 
-Make a digispark run a python script in the background on any "victim" windows computer you plug it into with python3+. The main use is in Cybersecurity/penetration testing where the background script could do something like install some kind of reverse shell or keylogger, but it could be used for loads of other things like running a script to download and install a list of programs after a factory reset.
+Make a digispark/teensy run a python script in the background on any "victim" windows computer you plug it into with python3+. The main use is in Cybersecurity/penetration testing where the background script could do something like install some kind of reverse shell or keylogger, but it could be used for loads of other things like running a script to download and install a list of programs after a factory reset.
 
 #
 ### "Features"
