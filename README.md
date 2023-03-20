@@ -11,7 +11,7 @@
 Make a digispark/teensy run a python script in the background on any "victim" windows computer you plug it into with python3+. The main use is in Cybersecurity/penetration testing where the background script could do something like install some kind of reverse shell or keylogger, but it could be used for loads of other things like running a script to download and install a list of programs after a factory reset.
 
 #
-### "Features"
+### Features
 - Made to work on 99% of machines with python installed, even if things like run menu are blocked, it runs python via start menu instead.
 - Stealthy as it runs the *actual* payload script in the background after the ~5 secs of setup.
 - Runs in ~5 secs (digispark) and less than a second (teensy)
